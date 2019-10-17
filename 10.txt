@@ -1,0 +1,211 @@
+Assignment No:- B3
+Implement aggregation and indexing with suitable example using MongoDB.
+
+
+priya@priya-Vostro-3578:~$ mongo
+MongoDB shell version v3.6.3
+connecting to: mongodb
+ > show dbs
+TE      0.000GB
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+> use TE
+switched to db TE
+> show collections
+College
+Priya
+colleg
+college
+docket
+emp
+info
+stud
+student
+> db.createCollection('marks')
+{ "ok" : 1 }
+
+//INSERTING RECORDS
+> db.marks.insert({'Rollno':1,'Name':'Neha','Subject':'CN','Marks':97})
+WriteResult({ "nInserted" : 1 })
+> db.marks.insert({'Rollno':2,'Name':'Nisha','Subject':'TOC','Marks':89})
+WriteResult({ "nInserted" : 1 })
+> db.marks.insert({'Rollno':3,'Name':'Nayna','Subject':'SEPM','Marks':78})
+WriteResult({ "nInserted" : 1 })
+> db.marks.insert({'Rollno':4,'Name':'Nishant','Subject':'SEPM','Marks':90})
+WriteResult({ "nInserted" : 1 })
+> db.marks.insert({'Rollno':5,'Name':'Neeta','Subject':'TOC','Marks':76})
+WriteResult({ "nInserted" : 1 })
+> db.marks.insert({'Rollno':6,'Name':'Niraj','Subject':'CN','Marks':98})
+WriteResult({ "nInserted" : 1 })
+
+//TOTAL
+> db.marks.aggregate([{$group:{'_id':'$Subject',Total:{$sum:'$Marks'}}}])
+{ "_id" : "TOC", "Total" : 165 }
+{ "_id" : "SEPM", "Total" : 168 }
+{ "_id" : "CN", "Total" : 195 }
+
+//MINIMUM
+> db.marks.aggregate([{$group:{'_id':'$Subject',Minimum:{$min:'$Marks'}}}])
+{ "_id" : "TOC", "Minimum" : 76 }
+{ "_id" : "SEPM", "Minimum" : 78 }
+{ "_id" : "CN", "Minimum" : 97 }
+
+//MAXIMUM
+> db.marks.aggregate([{$group:{'_id':'$Subject',Maximum:{$max:'$Marks'}}}])
+{ "_id" : "TOC", "Maximum" : 89 }
+{ "_id" : "SEPM", "Maximum" : 90 }
+{ "_id" : "CN", "Maximum" : 98 }
+
+//AVERAGE
+> db.marks.aggregate([{$group:{'_id':'$Subject',Average:{$avg:'$Marks'}}}])
+{ "_id" : "TOC", "Average" : 82.5 }
+{ "_id" : "SEPM", "Average" : 84 }
+{ "_id" : "CN", "Average" : 97.5 }
+
+//FIRST
+> db.marks.aggregate([{$group:{'_id':'$Subject',First:{$first:'$Marks'}}}])
+{ "_id" : "TOC", "First" : 89 }
+{ "_id" : "SEPM", "First" : 78 }
+{ "_id" : "CN", "First" : 97 }
+
+//LAST
+> db.marks.aggregate([{$group:{'_id':'$Subject',Last:{$last:'$Marks'}}}])
+{ "_id" : "TOC", "Last" : 76 }
+{ "_id" : "SEPM", "Last" : 90 }
+{ "_id" : "CN", "Last" : 98 }
+
+//PUSH
+> db.marks.aggregate([{$group:{'_id':'$Subject',Push:{$push:'$Marks'}}}])
+{ "_id" : "TOC", "Push" : [ 89, 76 ] }
+{ "_id" : "SEPM", "Push" : [ 78, 90 ] }
+{ "_id" : "CN", "Push" : [ 97, 98 ] }
+
+//INDEX
+//CREATE INDEX
+> db.marks.createIndex({Rollno:1,Marks:97})
+{
+	"createdCollectionAutomatically" : false,
+	"numIndexesBefore" : 1,
+	"numIndexesAfter" : 2,
+	"ok" : 1
+}
+> db.marks.getIndexes
+function (filter) {
+    var res = this._getIndexesCommand(filter);
+    if (res) {
+        return res;
+    }
+    return this._getIndexesSystemIndexes(filter);
+}
+> db.marks.getIndexes()
+[
+	{
+		"v" : 2,
+		"key" : {
+			"_id" : 1
+		},
+		"name" : "_id_",
+		"ns" : "TE.marks"
+	},
+	{
+		"v" : 2,
+		"key" : {
+			"Rollno" : 1,
+			"Marks" : 97
+		},
+		"name" : "Rollno_1_Marks_97",
+		"ns" : "TE.marks"
+	}
+
+//SORTING INDEX IN ASCENDING ORDER
+> db.marks.find().sort({Marks:1}).pretty()
+{
+	"_id" : ObjectId("5d8f809b66d10cc6eeab706e"),
+	"Rollno" : 5,
+	"Name" : "Neeta",
+	"Subject" : "TOC",
+	"Marks" : 76
+}
+{
+	"_id" : ObjectId("5d8f807566d10cc6eeab706c"),
+	"Rollno" : 3,
+	"Name" : "Nayna",
+	"Subject" : "SEPM",
+	"Marks" : 78
+}
+{
+	"_id" : ObjectId("5d8f805866d10cc6eeab706b"),
+	"Rollno" : 2,
+	"Name" : "Nisha",
+	"Subject" : "TOC",
+	"Marks" : 89
+}
+{
+	"_id" : ObjectId("5d8f808566d10cc6eeab706d"),
+	"Rollno" : 4,
+	"Name" : "Nishant",
+	"Subject" : "SEPM",
+	"Marks" : 90
+}
+{
+	"_id" : ObjectId("5d8f804166d10cc6eeab706a"),
+	"Rollno" : 1,
+	"Name" : "Neha",
+	"Subject" : "CN",
+	"Marks" : 97
+}
+{
+	"_id" : ObjectId("5d8f80b966d10cc6eeab706f"),
+	"Rollno" : 6,
+	"Name" : "Niraj",
+	"Subject" : "CN",
+	"Marks" : 98
+}
+
+//SORTING INDEX IN DECENDING ORDER
+> db.marks.find().sort({Marks:-1}).pretty()
+{
+	"_id" : ObjectId("5d8f80b966d10cc6eeab706f"),
+	"Rollno" : 6,
+	"Name" : "Niraj",
+	"Subject" : "CN",
+	"Marks" : 98
+}
+{
+	"_id" : ObjectId("5d8f804166d10cc6eeab706a"),
+	"Rollno" : 1,
+	"Name" : "Neha",
+	"Subject" : "CN",
+	"Marks" : 97
+}
+{
+	"_id" : ObjectId("5d8f808566d10cc6eeab706d"),
+	"Rollno" : 4,
+	"Name" : "Nishant",
+	"Subject" : "SEPM",
+	"Marks" : 90
+}
+{
+	"_id" : ObjectId("5d8f805866d10cc6eeab706b"),
+	"Rollno" : 2,
+	"Name" : "Nisha",
+	"Subject" : "TOC",
+	"Marks" : 89
+}
+{
+	"_id" : ObjectId("5d8f807566d10cc6eeab706c"),
+	"Rollno" : 3,
+	"Name" : "Nayna",
+	"Subject" : "SEPM",
+	"Marks" : 78
+}
+{
+	"_id" : ObjectId("5d8f809b66d10cc6eeab706e"),
+	"Rollno" : 5,
+	"Name" : "Neeta",
+	"Subject" : "TOC",
+	"Marks" : 76
+}
+
+

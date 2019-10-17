@@ -1,0 +1,166 @@
+Unnamed PL/SQL code block: Use of Control structure and Exception handling is mandatory.
+Write a PL/SQL block of code for the following requirements:-
+Schema :-
+1. Borrower(Rollin, Name, DateofIssue, NameofBook, Status)
+2. Fine(Roll_no,Date,Amt)
+*Accept roll_no & name of book from user.
+*Check the number of days (from date of issue), if days are between 15 to 30 then fine
+amount will be Rs 5per day.
+*If no. of days>30, per day fine swill be Rs 50 per day & for days less than 30, Rs. 5 per
+day.
+*After submitting the book, status will change from I to R.
+*If condition of fine is true, then details will be stored into fine table.
+*Frame the problem statement for writing PL/SQL block inline with above statement.
+/*
+DROP PROCEDURE IF EXISTS p1;
+delimiter //
+							#//create procedure p1
+create procedure p1(IN rno int, IN bname varchar(20))
+    begin 
+    declare d1 date;		#			//delare variables 
+    declare daycnt int;
+    declare fine_amt int;
+    
+    select DOI into d1 from borrower where rollno = rno and  nameofbook = bname;		
+    select DATEDIFF(now(),d1) into daycnt;
+    if (daycnt > 15 and daycnt < 30) then 		   #	//if else loop
+    set fine_amt = daycnt * 5;
+    insert into fine(rollno,date_of_fine,Amt) values (rno,now(),fine_amt);
+    elseif (daycnt > 30) then 
+    set fine_amt = daycnt * 50;
+    insert into fine(rollno,date_of_fine,Amt) values (rno,now(),fine_amt);
+    end if;						#//end if-else loop
+    update borrower set status = 'R' where rollno = rno;
+    end;						#//end procecdure
+    
+    //
+
+delimiter ;
+
+*/
+priya@priya:~$ sudo mysql
+[sudo] password for dell: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 6
+Server version: 5.7.23-0ubuntu0.18.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+
+mysql> use TEB58;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed				//create table borrower
+mysql> create table borrower(rollno int(11),name varchar(10),DOI date,nameofbook varchar(15),status varchar(10));
+Query OK, 0 rows affected (0.33 sec)
+
+mysql> desc borrower;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| rollno     | int(11)     | YES  |     | NULL    |       |
+| name       | varchar(10) | YES  |     | NULL    |       |
+| DOI        | date        | YES  |     | NULL    |       |
+| nameofbook | varchar(15) | YES  |     | NULL    |       |
+| status     | varchar(10) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+							//insert values to borrower table
+mysql> insert into borrower values(1,'shubham','2018-07-25','dbms','I'),(2,'shubhangi','2018-08-03','toc','I')(3,'prasad','2018-08-09','cn','I'),(4,'neha ','2018-08-25','sepm','I');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from borrower;				//display the values of borrower table
++--------+---------+------------+------------+--------+
+| rollno | name    | DOI        | nameofbook | status |
++--------+---------+------------+------------+--------+
+|      1 | shubham | 2018-07-25 | dbms       | I      |
+|      2 | shubhangi    | 2018-08-03 | toc        | I      |
+|      3 | prasad  | 2018-08-09 | cn         | I      |
+|      4 | neha  | 2018-08-25 | sepm       | I      |
++--------+---------+------------+------------+--------+
+4 rows in set (0.01 sec)
+							//create table fine
+mysql> create table fine(rollno int(11),date_of_fine date,Amt decimal(8,2));	
+Query OK, 0 rows affected (0.33 sec)
+
+mysql> desc fine;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| rollno       | int(11)      | YES  |     | NULL    |       |
+| date_of_fine | date         | YES  |     | NULL    |       |
+| Amt          | decimal(8,2) | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> DROP PROCEDURE IF EXISTS p1;				//Drop procedure if exists
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> 							
+mysql> delimiter //
+mysql> 							//create procedure p1
+mysql> create procedure p1(IN rno int, IN bname varchar(20))
+    -> begin 
+    -> declare d1 date;					//delare variables 
+    -> declare daycnt int;
+    -> declare fine_amt int;
+    -> 
+    -> select DOI into d1 from borrower where rollno = rno and  nameofbook = bname;		
+    -> select DATEDIFF(now(),d1) into daycnt;
+    -> if (daycnt > 15 and daycnt < 30) then 			//if else loop
+    -> set fine_amt = daycnt * 5;
+    -> insert into fine(rollno,date_of_fine,Amt) values (rno,now(),fine_amt);
+    -> elseif (daycnt > 30) then 
+    -> set fine_amt = daycnt * 50;
+    -> insert into fine(rollno,date_of_fine,Amt) values (rno,now(),fine_amt);
+    -> end if;						//end if-else loop
+    -> update borrower set status = 'R' where rollno = rno;
+    -> end;						//end procecdure
+    -> 
+    -> //
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter ;
+mysql> 
+mysql> call p1(1,'dbms');					//call procedure p1 for 1
+Query OK, 0 rows affected (0.40 sec)
+
+mysql> call p1(2,'toc');					//call procedure p1 for 2
+Query OK, 1 row affected (0.43 sec)
+
+mysql> call p1(3,'cn');					//call procedure p1 for 3
+Query OK, 1 row affected (0.82 sec)
+
+mysql> call p1(4,'sepm');					//call procedure p1 for 4
+Query OK, 1 row affected (0.20 sec)
+
+mysql> select * from fine;					//updated the fine table 
++--------+--------------+---------+
+| rollno | date_of_fine | Amt     |
++--------+--------------+---------+
+|      1 | 2018-10-01   | 3400.00 |
+|      2 | 2018-10-01   | 2950.00 |
+|      3 | 2018-10-01   | 2650.00 |
+|      4 | 2018-10-01   | 1850.00 |
++--------+--------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> select * from borrower;				//updated borrower table
++--------+---------+------------+------------+--------+
+| rollno | name    | DOI        | nameofbook | status |
++--------+---------+------------+------------+--------+
+|      1 | shubham | 2018-07-25 | dbms       | R      |
+|      2 | Shubhangi    | 2018-08-03 | toc        | R      |
+|      3 | prasad  | 2018-08-09 | cn         | R      |
+|      4 | Neha  | 2018-08-25 | sepm       | R      |
++--------+---------+------------+------------+--------+
+4 rows in set (0.00 sec)
+
+

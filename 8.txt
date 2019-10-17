@@ -1,0 +1,234 @@
+/*
+	Assignment No. -B1
+	Problem Statement -Study of Open Source NOSQL Database: MongoDB (Installation, Basic CRUD operations,
+                		      Execution)
+*/
+
+dell@sayali-5567:~$ mongo
+MongoDB shell version v3.6.3
+connecting to: mongodb://127.0.0.1:27017
+MongoDB server version: 3.6.3
+
+> use exam
+switched to db exam
+> db
+exam
+
+// CRUD Operation -
+// Create -
+
+
+> db.createCollection("mycol")
+{ "ok" : 1 }
+> db.mycol.insert({rollno:1,name:"sayali",city:"pune"})
+WriteResult({ "nInserted" : 1 })
+> db.mycol.insert({rollno:2,name:"sakshi",city:"nasik"})
+WriteResult({ "nInserted" : 1 })
+> db.mycol.insert({rollno:3,name:"priya",city:"mumbai"})
+WriteResult({ "nInserted" : 1 })
+> db.mycol.insert({rollno:4,name:"amruta",city:"nashik"})
+WriteResult({ "nInserted" : 1 })
+> db.mycol.insert({rollno:5,name:"raj",city:"hydrabad"})
+WriteResult({ "nInserted" : 1 })
+> db.mycol.insert({rollno:6,name:"pawan",city:"banglore"})
+WriteResult({ "nInserted" : 1 })
+> db.mycol.insert({rollno:7,name:"bhushan",city:"delhi"})
+WriteResult({ "nInserted" : 1 })
+> db.mycol.insert({rollno:8,name:"ankita",city:"mumbai"})
+WriteResult({ "nInserted" : 1 })
+> db.mycol.insert({rollno:9,name:"himani",city:"mumbai"})
+WriteResult({ "nInserted" : 1 })
+> db.mycol.insert({rollno:10,name:"hemangi",city:"pune"})
+WriteResult({ "nInserted" : 1 })
+
+// Read -
+
+> db.mycol.find().pretty()
+{
+	"_id" : ObjectId("5d8e2b36afb5045a922de969"),
+	"rollno" : 1,
+	"name" : "sayali",
+	"city" : "pune"
+}
+{
+	"_id" : ObjectId("5d8e2b45afb5045a922de96a"),
+	"rollno" : 2,
+	"name" : "sakshi",
+	"city" : "nasik"
+}
+{
+	"_id" : ObjectId("5d8e2b57afb5045a922de96b"),
+	"rollno" : 3,
+	"name" : "priya",
+	"city" : "mumbai"
+}
+{
+	"_id" : ObjectId("5d8e2b6fafb5045a922de96c"),
+	"rollno" : 4,
+	"name" : "amruta",
+	"city" : "nashik"
+}
+{
+	"_id" : ObjectId("5d8e2b92afb5045a922de96d"),
+	"rollno" : 5,
+	"name" : "raj",
+	"city" : "hydrabad"
+}
+{
+	"_id" : ObjectId("5d8e2ba5afb5045a922de96e"),
+	"rollno" : 6,
+	"name" : "pawan",
+	"city" : "banglore"
+}
+{
+	"_id" : ObjectId("5d8e2bb5afb5045a922de96f"),
+	"rollno" : 7,
+	"name" : "bhushan",
+	"city" : "delhi"
+}
+{
+	"_id" : ObjectId("5d8e2bc8afb5045a922de970"),
+	"rollno" : 8,
+	"name" : "ankita",
+	"city" : "mumbai"
+}
+{
+	"_id" : ObjectId("5d8e2bd5afb5045a922de971"),
+	"rollno" : 9,
+	"name" : "himani",
+	"city" : "mumbai"
+}
+{
+	"_id" : ObjectId("5d8e2be7afb5045a922de972"),
+	"rollno" : 10,
+	"name" : "hemangi",
+	"city" : "pune"
+}
+
+// Update -
+
+> db.mycol.update({city:"hydrabad"},{$set:{city:"nagpur"}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.mycol.find().pretty()
+{
+	"_id" : ObjectId("5d8e2b36afb5045a922de969"),
+	"rollno" : 1,
+	"name" : "sayali",
+	"city" : "pune"
+}
+{
+	"_id" : ObjectId("5d8e2b45afb5045a922de96a"),
+	"rollno" : 2,
+	"name" : "sakshi",
+	"city" : "nasik"
+}
+{
+	"_id" : ObjectId("5d8e2b57afb5045a922de96b"),
+	"rollno" : 3,
+	"name" : "priya",
+	"city" : "mumbai"
+}
+{
+	"_id" : ObjectId("5d8e2b6fafb5045a922de96c"),
+	"rollno" : 4,
+	"name" : "amruta",
+	"city" : "nashik"
+}
+{
+	"_id" : ObjectId("5d8e2b92afb5045a922de96d"),
+	"rollno" : 5,
+	"name" : "raj",
+	"city" : "nagpur"
+}
+{
+	"_id" : ObjectId("5d8e2ba5afb5045a922de96e"),
+	"rollno" : 6,
+	"name" : "pawan",
+	"city" : "banglore"
+}
+{
+	"_id" : ObjectId("5d8e2bb5afb5045a922de96f"),
+	"rollno" : 7,
+	"name" : "bhushan",
+	"city" : "delhi"
+}
+{
+	"_id" : ObjectId("5d8e2bc8afb5045a922de970"),
+	"rollno" : 8,
+	"name" : "ankita",
+	"city" : "mumbai"
+}
+{
+	"_id" : ObjectId("5d8e2bd5afb5045a922de971"),
+	"rollno" : 9,
+	"name" : "himani",
+	"city" : "mumbai"
+}
+{
+	"_id" : ObjectId("5d8e2be7afb5045a922de972"),
+	"rollno" : 10,
+	"name" : "hemangi",
+	"city" : "pune"
+}
+
+// Delete -
+
+> db.mycol.remove({name:"ankita"})
+WriteResult({ "nRemoved" : 1 })
+> db.mycol.find().pretty()
+{
+	"_id" : ObjectId("5d8e2b36afb5045a922de969"),
+	"rollno" : 1,
+	"name" : "sayali",
+	"city" : "pune"
+}
+{
+	"_id" : ObjectId("5d8e2b45afb5045a922de96a"),
+	"rollno" : 2,
+	"name" : "sakshi",
+	"city" : "nasik"
+}
+{
+	"_id" : ObjectId("5d8e2b57afb5045a922de96b"),
+	"rollno" : 3,
+	"name" : "priya",
+	"city" : "mumbai"
+}
+{
+	"_id" : ObjectId("5d8e2b6fafb5045a922de96c"),
+	"rollno" : 4,
+	"name" : "amruta",
+	"city" : "nashik"
+}
+{
+	"_id" : ObjectId("5d8e2b92afb5045a922de96d"),
+	"rollno" : 5,
+	"name" : "raj",
+	"city" : "nagpur"
+}
+{
+	"_id" : ObjectId("5d8e2ba5afb5045a922de96e"),
+	"rollno" : 6,
+	"name" : "pawan",
+	"city" : "banglore"
+}
+{
+	"_id" : ObjectId("5d8e2bb5afb5045a922de96f"),
+	"rollno" : 7,
+	"name" : "bhushan",
+	"city" : "delhi"
+}
+{
+	"_id" : ObjectId("5d8e2bd5afb5045a922de971"),
+	"rollno" : 9,
+	"name" : "himani",
+	"city" : "mumbai"
+}
+{
+	"_id" : ObjectId("5d8e2be7afb5045a922de972"),
+	"rollno" : 10,
+	"name" : "hemangi",
+	"city" : "pune"
+}
+> 
+

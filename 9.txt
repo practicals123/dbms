@@ -1,0 +1,385 @@
+Assignment No :-B2
+Design and Develop MongoDB Queries using CRUD operations. (Use CRUD operations,
+SAVE method, logical operators)
+
+
+priya@priya-Vostro-3578:~$ mongo
+MongoDB shell version v3.6.3
+connecting to: mongodb
+> show dbs
+TE      0.000GB
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+> use TE
+switched to db TE
+> db
+TE
+//INSERTING DATA INTO COLLECTION
+> db.createCollection('student')
+{ "ok" : 1 }
+> show collections
+Priya
+docket
+stud
+student
+> db.student.insert({'Rollno':1,'Name':'Pankhi','Address':'Nashik'})
+WriteResult({ "nInserted" : 1 })
+> db.student.insert({'Rollno':2,'Name':'Gauri','Address':'Nashik'})
+WriteResult({ "nInserted" : 1 })
+> db.student.find().pretty()
+{
+	"_id" : ObjectId("5d8f518db5a00b4015d261fb"),
+	"Rollno" : 1,
+	"Name" : "Pankhi",
+	"Address" : "Nashik"
+}
+{
+	"_id" : ObjectId("5d8f519bb5a00b4015d261fc"),
+	"Rollno" : 2,
+	"Name" : "Gauri",
+	"Address" : "Nashik"
+}
+> db.student.insert({'Rollno':3,'Name':'Sanchi','Address':'Mumbai'})
+WriteResult({ "nInserted" : 1 })
+> db.student.insert({'Rollno':4,'Name':'Khushi','Address':'Mumbai'})
+WriteResult({ "nInserted" : 1 })
+> db.student.insert({'Rollno':5,'Name':'Suchi','Address':'Pune'})
+WriteResult({ "nInserted" : 1 })
+> db.student.insert({'Rollno':6,'Name':'Kirti','Address':'Surat'})
+WriteResult({ "nInserted" : 1 })
+> db.student.insert({'Rollno':7,'Name':'Komal','Address':'Surat'})
+WriteResult({ "nInserted" : 1 })
+> db.student.insert({'Rollno':8,'Name':'Archana','Address':'Pune'})
+WriteResult({ "nInserted" : 1 })
+> db.student.insert({'Rollno':9,'Name':'Arati','Address':'Kalyan'})
+WriteResult({ "nInserted" : 1 })
+> db.student.insert({'Rollno':10,'Name':'Arushi','Address':'Nagar'})
+WriteResult({ "nInserted" : 1 })
+> db.student.find().pretty()
+{
+	"_id" : ObjectId("5d8f518db5a00b4015d261fb"),
+	"Rollno" : 1,
+	"Name" : "Pankhi",
+	"Address" : "Nashik"
+}
+{
+	"_id" : ObjectId("5d8f519bb5a00b4015d261fc"),
+	"Rollno" : 2,
+	"Name" : "Gauri",
+	"Address" : "Nashik"
+}
+{
+	"_id" : ObjectId("5d8f51c4b5a00b4015d261fd"),
+	"Rollno" : 3,
+	"Name" : "Sanchi",
+	"Address" : "Mumbai"
+}
+{
+	"_id" : ObjectId("5d8f51d5b5a00b4015d261fe"),
+	"Rollno" : 4,
+	"Name" : "Khushi",
+	"Address" : "Mumbai"
+}
+{
+	"_id" : ObjectId("5d8f51e8b5a00b4015d261ff"),
+	"Rollno" : 5,
+	"Name" : "Suchi",
+	"Address" : "Pune"
+}
+{
+	"_id" : ObjectId("5d8f51f9b5a00b4015d26200"),
+	"Rollno" : 6,
+	"Name" : "Kirti",
+	"Address" : "Surat"
+}
+{
+	"_id" : ObjectId("5d8f521fb5a00b4015d26201"),
+	"Rollno" : 7,
+	"Name" : "Komal",
+	"Address" : "Surat"
+}
+{
+	"_id" : ObjectId("5d8f5233b5a00b4015d26202"),
+	"Rollno" : 8,
+	"Name" : "Archana",
+	"Address" : "Pune"
+}
+{
+	"_id" : ObjectId("5d8f5246b5a00b4015d26203"),
+	"Rollno" : 9,
+	"Name" : "Arati",
+	"Address" : "Kalyan"
+}
+{
+	"_id" : ObjectId("5d8f525fb5a00b4015d26204"),
+	"Rollno" : 10,
+	"Name" : "Arushi",
+	"Address" : "Nagar"
+}
+//FINDING PARTICULAR VALUE
+
+> db.student.find({'Address':'Kalyan'}).pretty()
+{
+	"_id" : ObjectId("5d8f5246b5a00b4015d26203"),
+	"Rollno" : 9,
+	"Name" : "Arati",
+	"Address" : "Kalyan"
+}
+
+//APPLYING LOGICAL OPERATORS ON COLLECTION
+
+//LESS THAN
+> db.student.find({'Rollno':{$lt:5}}).pretty()
+{
+	"_id" : ObjectId("5d8f518db5a00b4015d261fb"),
+	"Rollno" : 1,
+	"Name" : "Pankhi",
+	"Address" : "Nashik"
+}
+{
+	"_id" : ObjectId("5d8f519bb5a00b4015d261fc"),
+	"Rollno" : 2,
+	"Name" : "Gauri",
+	"Address" : "Nashik"
+}
+{
+	"_id" : ObjectId("5d8f51c4b5a00b4015d261fd"),
+	"Rollno" : 3,
+	"Name" : "Sanchi",
+	"Address" : "Mumbai"
+}
+{
+	"_id" : ObjectId("5d8f51d5b5a00b4015d261fe"),
+	"Rollno" : 4,
+	"Name" : "Khushi",
+	"Address" : "Mumbai"
+}
+
+//GREATER THAN
+> db.student.find({'Rollno':{$gt:5}}).pretty()
+{
+	"_id" : ObjectId("5d8f51f9b5a00b4015d26200"),
+	"Rollno" : 6,
+	"Name" : "Kirti",
+	"Address" : "Surat"
+}
+{
+	"_id" : ObjectId("5d8f521fb5a00b4015d26201"),
+	"Rollno" : 7,
+	"Name" : "Komal",
+	"Address" : "Surat"
+}
+{
+	"_id" : ObjectId("5d8f5233b5a00b4015d26202"),
+	"Rollno" : 8,
+	"Name" : "Archana",
+	"Address" : "Pune"
+}
+{
+	"_id" : ObjectId("5d8f5246b5a00b4015d26203"),
+	"Rollno" : 9,
+	"Name" : "Arati",
+	"Address" : "Kalyan"
+}
+{
+	"_id" : ObjectId("5d8f525fb5a00b4015d26204"),
+	"Rollno" : 10,
+	"Name" : "Arushi",
+	"Address" : "Nagar"
+}
+
+//GREATER THAN EQUAL TO
+> db.student.find({'Rollno':{$gte:5}}).pretty()
+{
+	"_id" : ObjectId("5d8f51e8b5a00b4015d261ff"),
+	"Rollno" : 5,
+	"Name" : "Suchi",
+	"Address" : "Pune"
+}
+{
+	"_id" : ObjectId("5d8f51f9b5a00b4015d26200"),
+	"Rollno" : 6,
+	"Name" : "Kirti",
+	"Address" : "Surat"
+}
+{
+	"_id" : ObjectId("5d8f521fb5a00b4015d26201"),
+	"Rollno" : 7,
+	"Name" : "Komal",
+	"Address" : "Surat"
+}
+{
+	"_id" : ObjectId("5d8f5233b5a00b4015d26202"),
+	"Rollno" : 8,
+	"Name" : "Archana",
+	"Address" : "Pune"
+}
+{
+	"_id" : ObjectId("5d8f5246b5a00b4015d26203"),
+	"Rollno" : 9,
+	"Name" : "Arati",
+	"Address" : "Kalyan"
+}
+{
+	"_id" : ObjectId("5d8f525fb5a00b4015d26204"),
+	"Rollno" : 10,
+	"Name" : "Arushi",
+	"Address" : "Nagar"
+}
+
+//LESS THAN EQUAL TO
+> db.student.find({'Rollno':{$lte:5}}).pretty()
+{
+	"_id" : ObjectId("5d8f518db5a00b4015d261fb"),
+	"Rollno" : 1,
+	"Name" : "Pankhi",
+	"Address" : "Nashik"
+}
+{
+	"_id" : ObjectId("5d8f519bb5a00b4015d261fc"),
+	"Rollno" : 2,
+	"Name" : "Gauri",
+	"Address" : "Nashik"
+}
+{
+	"_id" : ObjectId("5d8f51c4b5a00b4015d261fd"),
+	"Rollno" : 3,
+	"Name" : "Sanchi",
+	"Address" : "Mumbai"
+}
+{
+	"_id" : ObjectId("5d8f51d5b5a00b4015d261fe"),
+	"Rollno" : 4,
+	"Name" : "Khushi",
+	"Address" : "Mumbai"
+}
+{
+	"_id" : ObjectId("5d8f51e8b5a00b4015d261ff"),
+	"Rollno" : 5,
+	"Name" : "Suchi",
+	"Address" : "Pune"
+}
+
+//NOT EQUAL TO
+> db.student.find({'Rollno':{$ne:5}}).pretty()
+{
+	"_id" : ObjectId("5d8f518db5a00b4015d261fb"),
+	"Rollno" : 1,
+	"Name" : "Pankhi",
+	"Address" : "Nashik"
+}
+{
+	"_id" : ObjectId("5d8f519bb5a00b4015d261fc"),
+	"Rollno" : 2,
+	"Name" : "Gauri",
+	"Address" : "Nashik"
+}
+{
+	"_id" : ObjectId("5d8f51c4b5a00b4015d261fd"),
+	"Rollno" : 3,
+	"Name" : "Sanchi",
+	"Address" : "Mumbai"
+}
+{
+	"_id" : ObjectId("5d8f51d5b5a00b4015d261fe"),
+	"Rollno" : 4,
+	"Name" : "Khushi",
+	"Address" : "Mumbai"
+}
+{
+	"_id" : ObjectId("5d8f51f9b5a00b4015d26200"),
+	"Rollno" : 6,
+	"Name" : "Kirti",
+	"Address" : "Surat"
+}
+{
+	"_id" : ObjectId("5d8f521fb5a00b4015d26201"),
+	"Rollno" : 7,
+	"Name" : "Komal",
+	"Address" : "Surat"
+}
+{
+	"_id" : ObjectId("5d8f5233b5a00b4015d26202"),
+	"Rollno" : 8,
+	"Name" : "Archana",
+	"Address" : "Pune"
+}
+{
+	"_id" : ObjectId("5d8f5246b5a00b4015d26203"),
+	"Rollno" : 9,
+	"Name" : "Arati",
+	"Address" : "Kalyan"
+}
+{
+	"_id" : ObjectId("5d8f525fb5a00b4015d26204"),
+	"Rollno" : 10,
+	"Name" : "Arushi",
+	"Address" : "Nagar"
+}
+
+//AND OPERATION
+> db.student.find({$and:[{'Rollno':{$lt:5}},{'Name':'Gauri'}]}).pretty()
+{
+	"_id" : ObjectId("5d8f519bb5a00b4015d261fc"),
+	"Rollno" : 2,
+	"Name" : "Gauri",
+	"Address" : "Nashik"
+}
+> db.student.find({$and:[{'Rollno':{$lt:5}},{'Address':'Nashik'}]}).pretty()
+{
+	"_id" : ObjectId("5d8f518db5a00b4015d261fb"),
+	"Rollno" : 1,
+	"Name" : "Pankhi",
+	"Address" : "Nashik"
+}
+{
+	"_id" : ObjectId("5d8f519bb5a00b4015d261fc"),
+	"Rollno" : 2,
+	"Name" : "Gauri",
+	"Address" : "Nashik"
+}
+
+//OR OPERATION
+> db.student.find({$or:[{'Rollno':{$lt:5}},{'Address':'Nashik'}]}).pretty()
+{
+	"_id" : ObjectId("5d8f518db5a00b4015d261fb"),
+	"Rollno" : 1,
+	"Name" : "Pankhi",
+	"Address" : "Nashik"
+}
+{
+	"_id" : ObjectId("5d8f519bb5a00b4015d261fc"),
+	"Rollno" : 2,
+	"Name" : "Gauri",
+	"Address" : "Nashik"
+}
+{
+	"_id" : ObjectId("5d8f51c4b5a00b4015d261fd"),
+	"Rollno" : 3,
+	"Name" : "Sanchi",
+	"Address" : "Mumbai"
+}
+{
+	"_id" : ObjectId("5d8f51d5b5a00b4015d261fe"),
+	"Rollno" : 4,
+	"Name" : "Khushi",
+	"Address" : "Mumbai"
+}
+
+//BOTH AND & OR OPERATION
+> db.student.find({'Address':'Nashik',$or:[{'Rollno':{$lt:5}}]}).pretty()
+{
+	"_id" : ObjectId("5d8f518db5a00b4015d261fb"),
+	"Rollno" : 1,
+	"Name" : "Pankhi",
+	"Address" : "Nashik"
+}
+{
+	"_id" : ObjectId("5d8f519bb5a00b4015d261fc"),
+	"Rollno" : 2,
+	"Name" : "Gauri",
+	"Address" : "Nashik"
+}
+
+

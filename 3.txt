@@ -1,0 +1,162 @@
+Assignment No :- A4
+Design at least 10 SQL queries for suitable database application using SQL DML statements:
+all types of Join, Sub-Query and View.
+
+priya@priya-Vostro-3578:~$ sudo mysql
+[sudo] password for priya: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 5.7.27-0ubuntu0.18.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use TEA26;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++-----------------+
+| Tables_in_TEA26 |
++-----------------+
+| customer        |
+| emp             |
+| emp1            |
+| student         |
+| student_view    |
+| student_view1   |
++-----------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from emp;
++--------+----------+------------+--------+
+| emp_no | emp_name | address    | salary |
++--------+----------+------------+--------+
+|      1 | Harsh    | Nanded     |  78000 |
+|      2 | Arati    | Nashik     |  56000 |
+|      3 | Aman     | Pune       |  78000 |
+|      4 | Amit     | Aurangabad |  87000 |
++--------+----------+------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from emp1;
++--------+----------+---------+--------+
+| emp_no | emp_name | address | salary |
++--------+----------+---------+--------+
+|      1 | Hitesh   | Nanded  |  67000 |
+|      2 | Hiten    | Surat   |  56000 |
+|      3 | Niket    | Nashik  |  78000 |
++--------+----------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> drop table emp1;
+Query OK, 0 rows affected (0.14 sec)
+
+mysql>  create table emp1(emp_no int,emp_name varchar(20),addr varchar (20),salary int);
+Query OK, 0 rows affected (0.34 sec)
+
+mysql> insert into emp1 values(1,'Hitesh','Nanded',67000);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into emp1 values(2,'Hiten','Surat',56000);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into emp1 values(3,'Niket','Nashik',78000);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from emp1;
++--------+----------+--------+--------+
+| emp_no | emp_name | addr   | salary |
++--------+----------+--------+--------+
+|      1 | Hitesh   | Nanded |  67000 |
+|      2 | Hiten    | Surat  |  56000 |
+|      3 | Niket    | Nashik |  78000 |
++--------+----------+--------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from em1;
+ERROR 1146 (42S02): Table 'TEA26.em1' doesn't exist
+mysql> select * from emp;
++--------+----------+------------+--------+
+| emp_no | emp_name | address    | salary |
++--------+----------+------------+--------+
+|      1 | Harsh    | Nanded     |  78000 |
+|      2 | Arati    | Nashik     |  56000 |
+|      3 | Aman     | Pune       |  78000 |
+|      4 | Amit     | Aurangabad |  87000 |
++--------+----------+------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select address from emp inner join emp1 on emp1.emp_no=emp.emp_no;
++---------+
+| address |
++---------+
+| Nanded  |
+| Nashik  |
+| Pune    |
++---------+
+3 rows in set (0.00 sec)
+
+mysql> select address from emp left  join emp1 on emp1.emp_no=emp.emp_no;
++------------+
+| address    |
++------------+
+| Nanded     |
+| Nashik     |
+| Pune       |
+| Aurangabad |
++------------+
+4 rows in set (0.00 sec)
+
+mysql> select address from emp right  join emp1 on emp1.emp_no=emp.emp_no;
++---------+
+| address |
++---------+
+| Nanded  |
+| Nashik  |
+| Pune    |
++---------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp right  outer join emp1 on emp1.emp_no=emp.emp_no;
++--------+----------+---------+--------+--------+----------+--------+--------+
+| emp_no | emp_name | address | salary | emp_no | emp_name | addr   | salary |
++--------+----------+---------+--------+--------+----------+--------+--------+
+|      1 | Harsh    | Nanded  |  78000 |      1 | Hitesh   | Nanded |  67000 |
+|      2 | Arati    | Nashik  |  56000 |      2 | Hiten    | Surat  |  56000 |
+|      3 | Aman     | Pune    |  78000 |      3 | Niket    | Nashik |  78000 |
++--------+----------+---------+--------+--------+----------+--------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp left  outer join emp1 on emp1.emp_no=emp.emp_no;
++--------+----------+------------+--------+--------+----------+--------+--------+
+| emp_no | emp_name | address    | salary | emp_no | emp_name | addr   | salary |
++--------+----------+------------+--------+--------+----------+--------+--------+
+|      1 | Harsh    | Nanded     |  78000 |      1 | Hitesh   | Nanded |  67000 |
+|      2 | Arati    | Nashik     |  56000 |      2 | Hiten    | Surat  |  56000 |
+|      3 | Aman     | Pune       |  78000 |      3 | Niket    | Nashik |  78000 |
+|      4 | Amit     | Aurangabad |  87000 |   NULL | NULL     | NULL   |   NULL |
++--------+----------+------------+--------+--------+----------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> create view admin as select emp_no,address,salary from emp;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from admin;
++--------+------------+--------+
+| emp_no | address    | salary |
++--------+------------+--------+
+|      1 | Nanded     |  78000 |
+|      2 | Nashik     |  56000 |
+|      3 | Pune       |  78000 |
+|      4 | Aurangabad |  87000 |
++--------+------------+--------+
+4 rows in set (0.00 sec)
+
+

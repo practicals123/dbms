@@ -1,0 +1,296 @@
+/*
+	Assignment No. -B5
+	Title -Design and Implement any 5 query using MongoDB.
+*/
+
+
+dell@priya-5567:~$ mongo
+MongoDB shell version v3.6.3
+connecting to: mongodb://127.0.0.1:27017
+MongoDB server version: 3.6.3
+
+> use TE
+switched to db TE
+> db
+TE
+> db.createCollection("stud")
+{ "ok" : 1 }
+
+QUERY:> db.stud.insert({rollno:1,name:"priya",class:"IT"})
+WriteResult({ "nInserted" : 1 })
+> db.stud.insert({rollno:2,name:"mansi",class:"computer"})
+WriteResult({ "nInserted" : 1 })
+> db.stud.insert({rollno:3,name:"rutuja",class:"computer"})
+WriteResult({ "nInserted" : 1 })
+> db.stud.insert({rollno:4,name:"rohini",class:"IT"})
+WriteResult({ "nInserted" : 1 })
+> db.stud.insert({rollno:5,name:"radhika",class:"Computer"})
+WriteResult({ "nInserted" : 1 })
+> db.stud.insert({rollno:6,name:"Shrushti",class:"IT"})
+WriteResult({ "nInserted" : 1 })
+> db.stud.insert({rollno:7,name:"janhvi",class:"IT"})
+WriteResult({ "nInserted" : 1 })
+> db.stud.insert({rollno:8,name:"isha",class:"computer"})
+WriteResult({ "nInserted" : 1 })
+> db.stud.insert({rollno:9,name:"vidya",class:"computer"})
+WriteResult({ "nInserted" : 1 })
+> db.stud.insert({rollno:10,name:"gayatri",class:"computer"})
+WriteResult({ "nInserted" : 1 })
+
+QUERY:> db.stud.find().pretty()
+OUTPUT:
+{
+	"_id" : ObjectId("5d8ceed6814f411fdb1d5d63"),
+	"rollno" : 1,
+	"name" : "priya",
+	"class" : "IT"
+}
+{
+	"_id" : ObjectId("5d8ceee7814f411fdb1d5d64"),
+	"rollno" : 2,
+	"name" : "mansi",
+	"class" : "computer"
+}
+{
+	"_id" : ObjectId("5d8ceef3814f411fdb1d5d65"),
+	"rollno" : 3,
+	"name" : "rutuja",
+	"class" : "computer"
+}
+{
+	"_id" : ObjectId("5d8cef15814f411fdb1d5d66"),
+	"rollno" : 4,
+	"name" : "rohini",
+	"class" : "IT"
+}
+{
+	"_id" : ObjectId("5d8cef27814f411fdb1d5d67"),
+	"rollno" : 5,
+	"name" : "radhika",
+	"class" : "Computer"
+}
+{
+	"_id" : ObjectId("5d8cef3c814f411fdb1d5d68"),
+	"rollno" : 6,
+	"name" : "Shrushti",
+	"class" : "IT"
+}
+{
+	"_id" : ObjectId("5d8cef4a814f411fdb1d5d69"),
+	"rollno" : 7,
+	"name" : "janhvi",
+	"class" : "IT"
+}
+{
+	"_id" : ObjectId("5d8cef5f814f411fdb1d5d6a"),
+	"rollno" : 8,
+	"name" : "isha",
+	"class" : "computer"
+}
+{
+	"_id" : ObjectId("5d8cef68814f411fdb1d5d6b"),
+	"rollno" : 9,
+	"name" : "vidya",
+	"class" : "computer"
+}
+{
+	"_id" : ObjectId("5d8cef74814f411fdb1d5d6c"),
+	"rollno" : 10,
+	"name" : "gayatri",
+	"class" : "computer"
+}
+
+//less than -
+
+QUERY:> db.stud.find({rollno:{$lt:5}}).pretty()
+OUTPUT:
+{
+	"_id" : ObjectId("5d8ceed6814f411fdb1d5d63"),
+	"rollno" : 1,
+	"name" : "priya",
+	"class" : "IT"
+}
+{
+	"_id" : ObjectId("5d8ceee7814f411fdb1d5d64"),
+	"rollno" : 2,
+	"name" : "mansi",
+	"class" : "computer"
+}
+{
+	"_id" : ObjectId("5d8ceef3814f411fdb1d5d65"),
+	"rollno" : 3,
+	"name" : "rutuja",
+	"class" : "computer"
+}
+{
+	"_id" : ObjectId("5d8cef15814f411fdb1d5d66"),
+	"rollno" : 4,
+	"name" : "rohini",
+	"class" : "IT"
+}
+
+//less than equal to -
+
+QUERY:> db.stud.find({rollno:{$lte:5}}).pretty()
+OUTPUT:
+{
+	"_id" : ObjectId("5d8ceed6814f411fdb1d5d63"),
+	"rollno" : 1,
+	"name" : "priya",
+	"class" : "IT"
+}
+{
+	"_id" : ObjectId("5d8ceee7814f411fdb1d5d64"),
+	"rollno" : 2,
+	"name" : "mansi",
+	"class" : "computer"
+}
+{
+	"_id" : ObjectId("5d8ceef3814f411fdb1d5d65"),
+	"rollno" : 3,
+	"name" : "rutuja",
+	"class" : "computer"
+}
+{
+	"_id" : ObjectId("5d8cef15814f411fdb1d5d66"),
+	"rollno" : 4,
+	"name" : "rohini",
+	"class" : "IT"
+}
+{
+	"_id" : ObjectId("5d8cef27814f411fdb1d5d67"),
+	"rollno" : 5,
+	"name" : "radhika",
+	"class" : "Computer"
+}
+
+// Greater than -
+
+QUERY:> db.stud.find({rollno:{$gt:5}}).pretty()
+OUTPUT:
+{
+	"_id" : ObjectId("5d8cef3c814f411fdb1d5d68"),
+	"rollno" : 6,
+	"name" : "Shrushti",
+	"class" : "IT"
+}
+{
+	"_id" : ObjectId("5d8cef4a814f411fdb1d5d69"),
+	"rollno" : 7,
+	"name" : "janhvi",
+	"class" : "IT"
+}
+{
+	"_id" : ObjectId("5d8cef5f814f411fdb1d5d6a"),
+	"rollno" : 8,
+	"name" : "isha",
+	"class" : "computer"
+}
+{
+	"_id" : ObjectId("5d8cef68814f411fdb1d5d6b"),
+	"rollno" : 9,
+	"name" : "vidya",
+	"class" : "computer"
+}
+{
+	"_id" : ObjectId("5d8cef74814f411fdb1d5d6c"),
+	"rollno" : 10,
+	"name" : "gayatri",
+	"class" : "computer"
+}
+
+//Greater than equal to -
+
+QUERY:> db.stud.find({rollno:{$gte:6}}).pretty()
+OUTPUT:
+{
+	"_id" : ObjectId("5d8cef3c814f411fdb1d5d68"),
+	"rollno" : 6,
+	"name" : "Shrushti",
+	"class" : "IT"
+}
+{
+	"_id" : ObjectId("5d8cef4a814f411fdb1d5d69"),
+	"rollno" : 7,
+	"name" : "janhvi",
+	"class" : "IT"
+}
+{
+	"_id" : ObjectId("5d8cef5f814f411fdb1d5d6a"),
+	"rollno" : 8,
+	"name" : "isha",
+	"class" : "computer"
+}
+{
+	"_id" : ObjectId("5d8cef68814f411fdb1d5d6b"),
+	"rollno" : 9,
+	"name" : "vidya",
+	"class" : "computer"
+}
+{
+	"_id" : ObjectId("5d8cef74814f411fdb1d5d6c"),
+	"rollno" : 10,
+	"name" : "gayatri",
+	"class" : "computer"
+}
+
+// Not equal to -
+
+QUERY:> db.stud.find({rollno:{$ne:6}}).pretty()
+OUTPUT:
+{
+	"_id" : ObjectId("5d8ceed6814f411fdb1d5d63"),
+	"rollno" : 1,
+	"name" : "priya",
+	"class" : "IT"
+}
+{
+	"_id" : ObjectId("5d8ceee7814f411fdb1d5d64"),
+	"rollno" : 2,
+	"name" : "mansi",
+	"class" : "computer"
+}
+{
+	"_id" : ObjectId("5d8ceef3814f411fdb1d5d65"),
+	"rollno" : 3,
+	"name" : "rutuja",
+	"class" : "computer"
+}
+{
+	"_id" : ObjectId("5d8cef15814f411fdb1d5d66"),
+	"rollno" : 4,
+	"name" : "rohini",
+	"class" : "IT"
+}
+{
+	"_id" : ObjectId("5d8cef27814f411fdb1d5d67"),
+	"rollno" : 5,
+	"name" : "radhika",
+	"class" : "Computer"
+}
+{
+	"_id" : ObjectId("5d8cef4a814f411fdb1d5d69"),
+	"rollno" : 7,
+	"name" : "janhvi",
+	"class" : "IT"
+}
+{
+	"_id" : ObjectId("5d8cef5f814f411fdb1d5d6a"),
+	"rollno" : 8,
+	"name" : "isha",
+	"class" : "computer"
+}
+{
+	"_id" : ObjectId("5d8cef68814f411fdb1d5d6b"),
+	"rollno" : 9,
+	"name" : "vidya",
+	"class" : "computer"
+}
+{
+	"_id" : ObjectId("5d8cef74814f411fdb1d5d6c"),
+	"rollno" : 10,
+	"name" : "gayatri",
+	"class" : "computer"
+}
+> 
+
